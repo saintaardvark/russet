@@ -1,11 +1,25 @@
 #!/usr/bin/env python3
 
+import click
+
 from cthief_wrapper import ColorThiefWrapper
 
-def main(img="russet_test-0001.png"):
-    """Main entry point.
+@click.group()
+def russet():
     """
-    cthief = ColorThiefWrapper(img)
+    Tool for tracking colour changes in images.
+    """
+    pass
+
+@click.command('analyze',
+               short_help='Analyze single image file')
+@click.argument('image',
+                required=True,
+                type=click.Path(resolve_path=True))
+def analyze(image):
+    """Analyze sinlge image and print colour/pixel counts
+    """
+    cthief = ColorThiefWrapper(image)
     cmap = cthief.get_palette_cmap()
 
     for vb in cmap.vboxes.contents:
@@ -13,6 +27,7 @@ def main(img="russet_test-0001.png"):
         count = vb['vbox'].count
         print("{}: has {} pixels".format(color, count))
 
+russet.add_command(analyze)
 
 if __name__ == '__main__':
-    main()
+    russet()
