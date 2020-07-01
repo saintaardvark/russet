@@ -3,6 +3,7 @@
 import click
 
 from cthief_wrapper import ColorThiefWrapper
+from plot import RussetPlot
 
 @click.group()
 def russet():
@@ -34,7 +35,7 @@ def analyze(image):
                 required=True,
                 type=click.Path(resolve_path=True))
 def plot(image):
-    pass
+    RussetPlot(image)
 
 russet.add_command(analyze)
 russet.add_command(plot)
