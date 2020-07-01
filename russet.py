@@ -27,7 +27,17 @@ def analyze(image):
         count = vb['vbox'].count
         print("{}: has {} pixels".format(color, count))
 
+
+@click.command('plot',
+              short_help='Plot some image data')
+@click.argument('image',
+                required=True,
+                type=click.Path(resolve_path=True))
+def plot(image):
+    pass
+
 russet.add_command(analyze)
+russet.add_command(plot)
 
 if __name__ == '__main__':
     russet()
