@@ -17,7 +17,7 @@ def russet():
                 required=True,
                 type=click.Path(resolve_path=True))
 def analyze(image):
-    """Analyze sinlge image and print colour/pixel counts
+    """Analyze single image and print colour/pixel counts
     """
     cthief = ColorThiefWrapper(image)
     cmap = cthief.get_palette_cmap()
