@@ -39,6 +39,7 @@ def RussetPlot(image):
 
         r1 = mpatch.Rectangle((0, i), 1, 1, color=cn)
         r2 = mpatch.Rectangle((1, i), 1, 1, color=cn)
+
         txt = ax.text(2, i+.5, '{} / {}'.format(pixel_count, total_pixels),
                       va='center', fontsize=10, weight=weight)
         ax.add_patch(r1)
@@ -46,8 +47,8 @@ def RussetPlot(image):
         ax.axhline(i, color='k')
 
 
-        ax.text(.5, i + 1.5, '{0:.2f} %'.format(pixel_percent), ha='center', va='center')
-        ax.text(1.5, i + 1.5, color_label, ha='center', va='center')
+        ax.text(.5, i + .5, '{0:.2f} %'.format(pixel_percent), ha='center', va='center')
+        ax.text(1.5, i + .5, color_label, ha='center', va='center')
         ax.set_xlim(0, 3)
         ax.set_ylim(0, i + 2)
         ax.axis('off')
