@@ -32,7 +32,7 @@ def RussetPlot(image):
         weight = None
 
         # Need to map to tuple of range(0, 1)
-        cn = tuple(map(lambda x: x / 255.0, vb['color']))
+        cn = normalize_color(vb)
 
         r1 = mpatch.Rectangle((0, i), 1, 1, color=cn)
         r2 = mpatch.Rectangle((1, i), 1, 1, color=cn)
@@ -53,3 +53,8 @@ def RussetPlot(image):
         i = i + 1
 
     plt.show()
+
+def normalize_color(vb):
+    """ Convert RGB values from (0..255) to (0...1.0)
+    """
+    return tuple(map(lambda x: x / 255.0, vb['color']))
