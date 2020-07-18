@@ -27,7 +27,7 @@ def analyze(image):
 
     # FIXME: better variable name
     # FIXME: Make a class
-    everything = []
+    all_colours = []
     for vb in cmap.vboxes.contents:
 
         rgb_values = dict(zip(['r', 'g', 'b'], vb['color']))
@@ -35,8 +35,10 @@ def analyze(image):
         point = {'color': rgb_values,
                  'count': count
         }
-        everything.append(point)
-
+        all_colours.append(point)
+    metadata = {'date': 12345, 'cam': 67890}
+    everything = {'metadata': metadata,
+                  'all_colours': all_colours}
     print(json.dumps(everything, indent=2))
 
 
