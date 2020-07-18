@@ -6,6 +6,7 @@ import click
 
 from cthief_wrapper.cthief_wrapper import ColorThiefWrapper
 from plot import RussetPlot
+from rimage.rimage import Rimage
 
 @click.group()
 def russet():
@@ -22,23 +23,10 @@ def russet():
 def analyze(image):
     """Analyze single image and print colour/pixel counts in JSON
     """
-    cthief = ColorThiefWrapper(image)
-    cmap = cthief.get_palette_cmap()
+    image_data = Rimage(image)
 
-    # FIXME: better variable name
-    # FIXME: Make a class
-    all_colours = []
-    for vb in cmap.vboxes.contents:
-
-        rgb_values = dict(zip(['r', 'g', 'b'], vb['color']))
-        count = vb['vbox'].count
-        point = {'color': rgb_values,
-                 'count': count
-        }
-        all_colours.append(point)
-    metadata = {'date': 12345, 'cam': 67890}
-    everything = {'metadata': metadata,
-                  'all_colours': all_colours}
+    everything = {'metadata': image_data.metadata,
+                  'all_colours': image_data.colour_data}
     print(json.dumps(everything, indent=2))
 
 
