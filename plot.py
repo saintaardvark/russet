@@ -6,7 +6,7 @@ import matplotlib._color_data as mcd
 import matplotlib.patches as mpatch
 import matplotlib.image as mpimg
 
-from cthief_wrapper import ColorThiefWrapper
+from cthief_wrapper.cthief_wrapper import ColorThiefWrapper
 
 def RussetPlot(image):
     """Plot stuff about an image

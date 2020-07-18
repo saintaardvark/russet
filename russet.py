@@ -4,7 +4,7 @@ import json
 
 import click
 
-from cthief_wrapper import ColorThiefWrapper
+from cthief_wrapper.cthief_wrapper import ColorThiefWrapper
 from plot import RussetPlot
 
 @click.group()
