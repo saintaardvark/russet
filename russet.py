@@ -30,7 +30,7 @@ def analyze(image):
 
 
 @click.command('plot',
-              short_help='Plot some image data')
+               short_help='Plot some image data')
 @click.argument('image',
                 required=True,
                 type=click.Path(resolve_path=True))
