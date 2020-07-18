@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 
+import json
+
 import click
 
 from cthief_wrapper import ColorThiefWrapper
@@ -18,15 +20,24 @@ def russet():
                 required=True,
                 type=click.Path(resolve_path=True))
 def analyze(image):
-    """Analyze single image and print colour/pixel counts
+    """Analyze single image and print colour/pixel counts in JSON
     """
     cthief = ColorThiefWrapper(image)
     cmap = cthief.get_palette_cmap()
 
+    # FIXME: better variable name
+    # FIXME: Make a class
+    everything = []
     for vb in cmap.vboxes.contents:
-        color = vb['color']
+
+        rgb_values = dict(zip(['r', 'g', 'b'], vb['color']))
         count = vb['vbox'].count
-        print("{}: has {} pixels".format(color, count))
+        point = {'color': rgb_values,
+                 'count': count
+        }
+        everything.append(point)
+
+    print(json.dumps(everything, indent=2))
 
 
 @click.command('plot',
