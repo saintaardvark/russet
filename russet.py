@@ -16,6 +16,36 @@ def russet():
     """
     pass
 
+
+def build_line_format(metadata, colours):
+    """Build line format for InfluxDB
+    """
+    return "FIXME"
+
+
+def send_to_influxdb(line):
+    """Send line to InfluxDB
+    """
+    pass
+
+@click.command('send_image_data',
+               short_help='Analyze image and send data')
+@click.argument('image',
+                required=True,
+                type=click.Path(resolve_path=True))
+def send_image_data(image):
+    """Analyze image and send data
+    """
+    try:
+        image_data = Rimage(image)
+    except FileNotFoundError as e:
+        print("Can't find that image: {}".format(e))
+        sys.exit(1)
+
+    line = build_line_format(metadata=image_data.metadata,
+                             colours=image_data.colour_data)
+    send_to_influxdb(line)
+
 @click.command('analyze',
                short_help='Analyze single image file')
 @click.argument('image',
@@ -45,6 +75,7 @@ def plot(image):
 
 russet.add_command(analyze)
 russet.add_command(plot)
+russet.add_command(send_image_data)
 
 if __name__ == '__main__':
     russet()
