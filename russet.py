@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import json
+import sys
 
 import click
 
@@ -23,7 +24,11 @@ def russet():
 def analyze(image):
     """Analyze single image and print colour/pixel counts in JSON
     """
-    image_data = Rimage(image)
+    try:
+        image_data = Rimage(image)
+    except FileNotFoundError as e:
+        print("Can't find that image: {}".format(e))
+        sys.exit(1)
 
     everything = {'metadata': image_data.metadata,
                   'all_colours': image_data.colour_data}
