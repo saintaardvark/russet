@@ -8,6 +8,7 @@ import click
 from cthief_wrapper.cthief_wrapper import ColorThiefWrapper
 from plot import RussetPlot
 from rimage.rimage import Rimage
+import rdata.rdata as rdata
 
 @click.group()
 def russet():
@@ -17,16 +18,6 @@ def russet():
     pass
 
 
-def build_line_format(metadata, colours):
-    """Build line format for InfluxDB
-    """
-    return "FIXME"
-
-
-def send_to_influxdb(line):
-    """Send line to InfluxDB
-    """
-    pass
 
 @click.command('send_image_data',
                short_help='Analyze image and send data')
@@ -42,9 +33,8 @@ def send_image_data(image):
         print("Can't find that image: {}".format(e))
         sys.exit(1)
 
-    line = build_line_format(metadata=image_data.metadata,
-                             colours=image_data.colour_data)
-    send_to_influxdb(line)
+    rdata.send_to_influxdb(image_data)
+
 
 @click.command('analyze',
                short_help='Analyze single image file')
