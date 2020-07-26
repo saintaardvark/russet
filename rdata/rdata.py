@@ -26,24 +26,24 @@ def build_line_format(image_data):
     return lf_string
 
 
-def build_measurement_string(image_data):
+def build_measurement_string(datapoint):
     """Build measurement string
     """
     return influxdb_measurement
 
 
-def build_tag_string(image_data):
+def build_tag_string(datapoint):
     """Build tag string from image data, probably colours
     """
     return 'FIXME_tag_string'
 
 
-def build_value_string(image_data):
+def build_value_string(datapoint):
     """Build value string
     """
-    return 'FIXME_value_string'
+    return '{}'.format(datapoint['count'])
 
-def build_timestamp_string(image_data):
+def build_timestamp_string(datapoint):
     """Build up timestamp string from image name
     """
     return 'FIXME_timestamp'
@@ -52,5 +52,7 @@ def build_timestamp_string(image_data):
 def send_to_influxdb(image_data):
     """Send line to InfluxDB
     """
-    line = build_line_format(image_data)
-    print('[FIXME] {}'.format(line))
+    print('{}'.format(image_data.colour_data))
+    for datapoint in image_data.colour_data:
+        line = build_line_format(datapoint)
+        print('[FIXME] {}'.format(line))
