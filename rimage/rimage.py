@@ -1,6 +1,9 @@
 """Class for working with Russet images
 """
 
+from pathlib import Path
+import re
+
 from cthief_wrapper.cthief_wrapper import ColorThiefWrapper
 
 class Rimage():
@@ -32,10 +35,28 @@ class Rimage():
         return all_colours
 
     def build_metadata(self):
-        """Return  metadata
+        """Return metadata
         """
         # FIXME: Need better metadata
-        metadata = {'date': 12345, 'cam': 67890}
+        img_date = self.build_image_date()
+        metadata = {'date': img_date,
+                    'filename': self.image_path,
+                    'cam': 67890,}
         return metadata
 
         metadata = build_metadata(image)
+
+
+    def build_image_date(self):
+        """Build image date out of filename
+
+        Assumes epoch seconds is in filename
+        """
+        fullpath = Path(self.image_path)
+        filename = fullpath.name
+
+        r = re.compile(r'\d+')
+        try:
+            return r.findall(filename)[0]
+        except IndexError:
+            return ""
