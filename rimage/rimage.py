@@ -23,10 +23,10 @@ class Rimage():
         cmap = cthief.get_palette_cmap()
 
         total_pixels = self.get_total_pixels(cmap.vboxes.contents)
+
         # FIXME: better variable name
         all_colours = []
         for vb in cmap.vboxes.contents:
-
             rgb_values = dict(zip(['r', 'g', 'b'], vb['color']))
             count = vb['vbox'].count
             percentage = float((count / total_pixels) * 100.0)
@@ -49,7 +49,6 @@ class Rimage():
         return metadata
 
         metadata = build_metadata(image)
-
 
     def build_image_date(self):
         """Build image date out of filename
