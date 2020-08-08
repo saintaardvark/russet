@@ -44,7 +44,8 @@ def build_tag_string(datapoint):
 def build_field_string(datapoint):
     """Build value string
     """
-    return 'count={}'.format(datapoint['count'])
+    count_string = 'count={}'.format(datapoint['count'])
+    return '{}'.format(count_string)
 
 
 def build_timestamp_string(metadata):
