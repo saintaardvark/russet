@@ -6,6 +6,15 @@ from influxdb import InfluxDBClient
 
 influxdb_measurement = 'russet'
 
+def send_to_influxdb(image_data):
+    """Send line to InfluxDB
+    """
+    print('{}'.format(image_data.metadata))
+
+    for datapoint in image_data.colour_data:
+        line = build_line_format(datapoint, image_data.metadata)
+        print('[FIXME] {}'.format(line))
+
 
 def build_line_format(image_data, metadata):
     """Build line format for InfluxDB
@@ -52,15 +61,6 @@ def build_timestamp_string(metadata):
     """Build up timestamp string from image name
     """
     return metadata['date']
-
-
-def send_to_influxdb(image_data):
-    """Send line to InfluxDB
-    """
-    print('{}'.format(image_data.metadata))
-    for datapoint in image_data.colour_data:
-        line = build_line_format(datapoint, image_data.metadata)
-        print('[FIXME] {}'.format(line))
 
 
 def rgb_to_hex(rgb):
