@@ -22,16 +22,20 @@ class Rimage():
         cthief = ColorThiefWrapper(self.image_path)
         cmap = cthief.get_palette_cmap()
 
+        total_pixels = self.get_total_pixels(cmap.vboxes.contents)
         # FIXME: better variable name
         all_colours = []
         for vb in cmap.vboxes.contents:
 
             rgb_values = dict(zip(['r', 'g', 'b'], vb['color']))
             count = vb['vbox'].count
+            percentage = float((count / total_pixels) * 100.0)
             point = {'color': rgb_values,
-                     'count': count
+                     'count': count,
+                     'percentage': percentage
             }
             all_colours.append(point)
+
         return all_colours
 
     def build_metadata(self):
@@ -60,3 +64,12 @@ class Rimage():
             return r.findall(filename)[0]
         except IndexError:
             return ""
+
+    def get_total_pixels(self, contents):
+        """Count total pixels
+        """
+        total_pixels = 0
+        for vb in contents:
+            total_pixels += vb['vbox'].count
+
+        return total_pixels
