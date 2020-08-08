@@ -54,7 +54,8 @@ def build_field_string(datapoint):
     """Build value string
     """
     count_string = 'count={}'.format(datapoint['count'])
-    return '{}'.format(count_string)
+    percentage_string = 'percentage={:2.2f}'.format(datapoint['percentage'])
+    return '{},{}'.format(count_string, percentage_string)
 
 
 def build_timestamp_string(metadata):
