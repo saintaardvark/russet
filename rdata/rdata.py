@@ -33,9 +33,12 @@ def build_measurement_string(datapoint):
 
 
 def build_tag_string(datapoint):
-    """Build tag string from image data, probably colours
+    """Build tag string from image colours
     """
-    return 'FIXME_tag_string'
+    color = datapoint['color']
+    color_tuple = (color['r'], color['g'], color['b'])
+    hex_color = '{}'.format(rgb_to_hex(color_tuple))
+    return 'tag=#{}'.format(hex_color)
 
 
 def build_value_string(datapoint):
@@ -57,3 +60,7 @@ def send_to_influxdb(image_data):
     for datapoint in image_data.colour_data:
         line = build_line_format(datapoint, image_data.metadata)
         print('[FIXME] {}'.format(line))
+
+
+def rgb_to_hex(rgb):
+    return '%02x%02x%02x' % rgb
