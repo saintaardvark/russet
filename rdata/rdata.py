@@ -13,13 +13,13 @@ def build_line_format(image_data, metadata):
 
     ms_string = build_measurement_string(image_data)
     tag_string = build_tag_string(image_data)
-    value_string = build_value_string(image_data)
+    field_string = build_field_string(image_data)
     ts_string = build_timestamp_string(metadata)
 
-    lf_string = "{ms_string},{tag_string} {value_string} {ts_string}" .format(
+    lf_string = "{ms_string},{tag_string} {field_string} {ts_string}" .format(
         ms_string=ms_string,
         tag_string=tag_string,
-        value_string=value_string,
+        field_string=field_string,
         ts_string=ts_string
     )
 
@@ -41,10 +41,10 @@ def build_tag_string(datapoint):
     return 'tag=#{}'.format(hex_color)
 
 
-def build_value_string(datapoint):
+def build_field_string(datapoint):
     """Build value string
     """
-    return '{}'.format(datapoint['count'])
+    return 'count={}'.format(datapoint['count'])
 
 
 def build_timestamp_string(metadata):
