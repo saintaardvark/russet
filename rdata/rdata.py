@@ -1,19 +1,42 @@
 """Module for Russet data handling
 """
 
+import os
+
 from influxdb import InfluxDBClient
 
 
 influxdb_measurement = 'russet'
+INFLUX_USER = 'influxdb'
+INFLUX_PASS = os.getenv('INFLUX_PASS')
+INFLUX_HOST = os.getenv('INFLUX_HOST')
+INFLUX_PORT = os.getenv('INFLUX_PORT')
 
 def send_to_influxdb(image_data):
     """Send line to InfluxDB
     """
     print('{}'.format(image_data.metadata))
 
+    points = []
     for datapoint in image_data.colour_data:
         line = build_line_format(datapoint, image_data.metadata)
         print('[FIXME] {}'.format(line))
+        points.append(line)
+
+    client = InfluxDBClient(host=INFLUX_HOST,
+                            port=INFLUX_PORT,
+                            username=INFLUX_USER,
+                            password=INFLUX_PASS,
+                            database=influxdb_measurement)
+
+    # FIXME: No return code from create_database? wtf?
+    client.create_database(influxdb_measurement)
+
+    result = client.write(points, params={'db': influxdb_measurement}, protocol='line')
+    if result is True:
+        print('Points written!')
+    else:
+        print("Problem (not exception) writing points!")
 
 
 def build_line_format(image_data, metadata):
