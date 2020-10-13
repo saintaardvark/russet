@@ -27,7 +27,9 @@ def send_to_influxdb(image_data):
                             port=INFLUX_PORT,
                             username=INFLUX_USER,
                             password=INFLUX_PASS,
-                            database=influxdb_measurement)
+                            database=influxdb_measurement,
+                            ssl=True,
+                            verify_ssl=True)
 
     # FIXME: No return code from create_database? wtf?
     client.create_database(influxdb_measurement)
