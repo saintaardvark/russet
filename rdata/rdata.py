@@ -20,7 +20,6 @@ def send_to_influxdb(image_data):
     points = []
     for datapoint in image_data.colour_data:
         line = build_line_format(datapoint, image_data.metadata)
-        print('[FIXME] {}'.format(line))
         points.append(line)
 
     client = InfluxDBClient(host=INFLUX_HOST,
@@ -35,9 +34,8 @@ def send_to_influxdb(image_data):
     client.create_database(influxdb_measurement)
 
     result = client.write(points, params={'db': influxdb_measurement}, protocol='line')
-    if result is True:
-        print('Points written!')
-    else:
+    if result is not True:
+        # FIXME: Should have some kind of exception here.
         print("Problem (not exception) writing points!")
 
 
