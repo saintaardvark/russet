@@ -17,7 +17,8 @@ find_files_to_process() {
 
 process_file() {
     FILE="$1"
-    ./russet.py send_image_data $FILE
+    MSG=$(./russet.py send_image_data $FILE)
+    logger -p local0.notice "russet: $MSG"
 }
 
 archive_file() {
